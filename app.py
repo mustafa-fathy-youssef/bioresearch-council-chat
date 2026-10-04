@@ -48,9 +48,13 @@ if prompt := st.chat_input("Enter your research topic..."):
 
             # Poll for status
             status_url = f"{API_URL}/status/{kickoff_id}"
-            max_attempts = 120  # 10 minutes max (5s interval)
+            max_attempts = 120
+            progress_bar = st.progress(0, text="Council deliberating...")
             for attempt in range(max_attempts):
-                time.sleep(2)
+                time.sleep(3)
+                progress_bar.progress(min((attempt + 1) / max_attempts, 1.0),
+                                     text=f"Council deliberating... ({attempt * 3}s)")
+                
                 status_resp = requests.get(status_url, headers=headers)
                 if status_resp.status_code != 200:
                     st.error(f"Error checking status: {status_resp.text}")
