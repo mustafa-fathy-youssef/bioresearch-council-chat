@@ -50,7 +50,7 @@ if prompt := st.chat_input("Enter your research topic..."):
             status_url = f"{API_URL}/status/{kickoff_id}"
             max_attempts = 120  # 10 minutes max (5s interval)
             for attempt in range(max_attempts):
-                time.sleep(5)
+                time.sleep(2)
                 status_resp = requests.get(status_url, headers=headers)
                 if status_resp.status_code != 200:
                     st.error(f"Error checking status: {status_resp.text}")
